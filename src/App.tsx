@@ -5,7 +5,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Layout from './components/layout/Layout';
 import Home from './pages/Home';
 import ResumeBuilder from './pages/ResumeBuilder';
-import logo from './logo.svg';
 import './App.css';
 
 // Create a custom theme for our application

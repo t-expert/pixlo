@@ -1,8 +1,10 @@
+// @ts-ignore - Will be used in future implementation
 import axios from 'axios';
 import { ResumeData } from '../types/resume';
 import { CoverLetterData, AIGenerationPrompt } from '../types/coverLetter';
 
 // This is a placeholder for the actual API URL - would be set via environment variables in a real app
+// @ts-ignore - Will be used in future implementation
 const API_URL = 'https://api.resumebuilder.example/v1';
 
 /**
