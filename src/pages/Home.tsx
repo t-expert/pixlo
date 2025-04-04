@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { 
   Box, 
   Typography, 
@@ -16,42 +16,33 @@ import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
 import SpeedIcon from '@mui/icons-material/Speed';
 
 const Home: React.FC = () => {
-  const titleRef = useRef<HTMLHeadingElement>(null);
+  const [animationPhase, setAnimationPhase] = useState<'pulseOnly' | 'waveActive'>('pulseOnly');
 
   useEffect(() => {
-    const title = titleRef.current;
-    if (!title) return;
+    let waveTimeout: NodeJS.Timeout;
+    let bounceTimeout: NodeJS.Timeout;
 
-    const startAnimation = () => {
-      // Reset animation state
-      title.style.removeProperty('animation');
-      title.style.color = 'white';
-      title.style.textShadow = '0 0 10px white';
-      void title.offsetWidth; // Trigger reflow
+    const cycleAnimation = () => {
+      setAnimationPhase('pulseOnly');
 
-      // Apply white bouncing animation
-      title.style.animation = 'bounce 0.5s ease-in-out infinite';
-
-      // After 10s, add rainbow wave effect while keeping bounce
-      setTimeout(() => {
-        title.style.animation = 'bounce 0.5s ease-in-out infinite, wave 3s linear';
+      waveTimeout = setTimeout(() => {
+        setAnimationPhase('waveActive');
       }, 10000);
 
-      // After wave completes (13s total), return to white bouncing
-      setTimeout(() => {
-        title.style.removeProperty('animation');
-        title.style.color = 'white';
-        title.style.textShadow = '0 0 10px white';
-        void title.offsetWidth; // Trigger reflow
-        title.style.animation = 'bounce 0.5s ease-in-out infinite';
-      }, 13000);
+      bounceTimeout = setTimeout(() => {
+        setAnimationPhase('pulseOnly');
+      }, 18000); // 10s pulse + 8s wave
     };
 
-    startAnimation();
-    // Repeat the animation cycle every 23 seconds
-    const interval = setInterval(startAnimation, 23000);
+    cycleAnimation();
+    const interval = setInterval(cycleAnimation, 28000); // 10s + 8s + 10s
 
-    return () => clearInterval(interval);
+    // Cleanup timeouts and interval on component unmount
+    return () => {
+      clearTimeout(waveTimeout);
+      clearTimeout(bounceTimeout);
+      clearInterval(interval);
+    };
   }, []);
 
   const features = [
@@ -89,71 +80,17 @@ const Home: React.FC = () => {
         <Container maxWidth="md">
           <Grid container spacing={4} alignItems="center">
             <Grid item xs={12} md={7}>
-              <Box sx={{ textAlign: 'center' }}>
-                <Typography 
-                  ref={titleRef}
-                  variant="h2" 
-                  component="h1" 
-                  sx={{
-                    mb: 2,
-                    '@keyframes bounce': {
-                      '0%, 100%': {
-                        transform: 'translateY(0)'
-                      },
-                      '50%': {
-                        transform: 'translateY(-20px)'
-                      }
-                    },
-                    '@keyframes wave': {
-                      '0%': {
-                        color: '#00ffff',
-                        textShadow: '0 0 10px #00ffff'
-                      },
-                      '20%': {
-                        color: '#ff00ff',
-                        textShadow: '0 0 10px #ff00ff'
-                      },
-                      '40%': {
-                        color: '#ffff00',
-                        textShadow: '0 0 10px #ffff00'
-                      },
-                      '60%': {
-                        color: '#00ff00',
-                        textShadow: '0 0 10px #00ff00'
-                      },
-                      '80%': {
-                        color: '#ff1493',
-                        textShadow: '0 0 10px #ff1493'
-                      },
-                      '100%': {
-                        color: '#00ffff',
-                        textShadow: '0 0 10px #00ffff'
-                      }
-                    }
-                  }}
-                >
-                  AI-Powered Resume Builder
-                </Typography>
-                <Typography 
-                  variant="h3" 
-                  sx={{ 
-                    color: 'white',
-                    textShadow: '0 0 10px white',
-                    animation: 'pulse 2s ease-in-out infinite',
-                    '@keyframes pulse': {
-                      '0%, 100%': {
-                        opacity: 1
-                      },
-                      '50%': {
-                        opacity: 0.7
-                      }
-                    }
-                  }}
-                >
-                  Big changes Coming Soon... WOAAOW
-                </Typography>
-              </Box>
-              <Typography variant="h5" paragraph>
+              {/* Main Title - Static */}
+              <Typography 
+                variant="h2" 
+                component="h1" 
+                align="center" // Center align
+                sx={{ mb: 1 }} // Reduced bottom margin
+              >
+                AI-Powered Resume Builder
+              </Typography>
+              {/* Subtitle - Static */}
+              <Typography variant="h5" paragraph> 
                 Create tailored resumes and cover letters that get you hired
               </Typography>
               <Box sx={{ mt: 4 }}>
@@ -212,6 +149,54 @@ const Home: React.FC = () => {
               />
             </Grid>
           </Grid>
+          {/* Coming Soon Text - Moved below the grid */}
+          <Typography
+            variant="h3"
+            align="center"
+            sx={{
+              mt: 4, // Margin top to space from grid
+              fontWeight: 'bold',
+              // Base styles - softer white
+              color: 'rgba(255,255,255,0.9)',
+              textShadow: '0 0 8px rgba(255,255,255,0.4)',
+              animation: 'breathe 4s ease-in-out infinite',
+              
+              // Animation based on phase
+              ...(animationPhase === 'waveActive' && {
+                animation: 'waveGradient 12s linear forwards',
+                backgroundImage: 'linear-gradient(to right, rgba(255,255,255,0.9) 0%, #87CEEB 20%, #DDA0DD 40%, #F0E68C 60%, #FFB6C1 80%, rgba(255,255,255,0.9) 100%)',
+                backgroundSize: '400% auto',
+                color: 'transparent',
+                backgroundClip: 'text',
+                WebkitBackgroundClip: 'text',
+                textShadow: '0 0 12px rgba(255,255,255,0.3)',
+              }),
+
+              // Breathing animation for white state
+              '@keyframes breathe': {
+                '0%, 100%': {
+                  textShadow: '0 0 8px rgba(255,255,255,0.4)',
+                  opacity: 0.9
+                },
+                '50%': {
+                  textShadow: '0 0 12px rgba(255,255,255,0.5)',
+                  opacity: 1
+                }
+              },
+
+              // Wave animation with smoother transitions
+              '@keyframes waveGradient': {
+                '0%': { 
+                  backgroundPosition: '0% center',
+                },
+                '100%': { 
+                  backgroundPosition: '-300% center',
+                }
+              },
+            }}
+          >
+            Big changes Coming Soon... WOAAOW
+          </Typography>
         </Container>
       </Paper>
 
