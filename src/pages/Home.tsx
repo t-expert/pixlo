@@ -168,19 +168,27 @@ const Home: React.FC = () => {
           sx={{
             fontSize: '4rem',
             fontWeight: 800,
+            letterSpacing: '0.1em',
+            '@keyframes bounce': {
+              '0%, 100%': {
+                transform: 'translateY(0)'
+              },
+              '50%': {
+                transform: 'translateY(-20px)'
+              }
             },
             '@keyframes wave': {
               '0%': {
                 color: '#00ffff',
-                textShadow: '0 0 15px #00ffff'
+                textShadow: '0 0 20px #00ffff, 0 0 40px #00ffff'
               },
               '50%': {
                 color: '#ff00ff',
-                textShadow: '0 0 15px #ff00ff'
+                textShadow: '0 0 20px #ff00ff, 0 0 40px #ff00ff'
               },
               '100%': {
                 color: '#00ffff',
-                textShadow: '0 0 15px #00ffff'
+                textShadow: '0 0 20px #00ffff, 0 0 40px #00ffff'
               }
             }
           }}
