@@ -1,5 +1,4 @@
 import React from 'react';
-import resumePreview from '../assets/resume-preview.webp';
 import { 
   Box, 
   Typography, 
@@ -131,18 +130,20 @@ const Home: React.FC = () => {
               </Box>
             </Grid>
             <Grid item xs={12} md={5}>
-              <Box 
-                component="img"
-                src={resumePreview}
-                alt="Resume preview"
-                sx={{ 
+              <Paper
+                elevation={3}
+                sx={{
                   width: '100%',
-                  height: 'auto',
+                  height: 400,
                   maxWidth: 400,
-                  display: 'block',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
                   margin: '0 auto',
                   borderRadius: 2,
-                  boxShadow: 3,
+                  backgroundColor: 'background.paper',
+                  border: '1px solid',
+                  borderColor: 'divider',
                   animation: 'fadeUp 2s ease-in',
                   '@keyframes fadeUp': {
                     '0%': {
@@ -155,7 +156,11 @@ const Home: React.FC = () => {
                     },
                   },
                 }}
-              />
+              >
+                <Typography variant="h6" color="text.secondary">
+                  Resume Preview
+                </Typography>
+              </Paper>
             </Grid>
           </Grid>
         </Container>
