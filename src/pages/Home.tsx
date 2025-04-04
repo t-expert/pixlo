@@ -26,30 +26,30 @@ const Home: React.FC = () => {
       // Reset animation state
       title.style.removeProperty('animation');
       title.style.color = 'white';
-      title.style.textShadow = '0 0 20px white';
+      title.style.textShadow = '0 0 10px white';
       void title.offsetWidth; // Trigger reflow
 
-      // First white bounce phase (10 seconds)
+      // Apply white bouncing animation
       title.style.animation = 'bounce 0.5s ease-in-out infinite';
 
-      // Rainbow wave phase (5 seconds)
+      // After 10s, add rainbow wave effect while keeping bounce
       setTimeout(() => {
-        title.style.animation = 'bounce 0.5s ease-in-out infinite, wave 5s linear forwards';
+        title.style.animation = 'bounce 0.5s ease-in-out infinite, wave 3s linear';
       }, 10000);
 
-      // Second white bounce phase (10 seconds)
+      // After wave completes (13s total), return to white bouncing
       setTimeout(() => {
         title.style.removeProperty('animation');
         title.style.color = 'white';
-        title.style.textShadow = '0 0 20px white';
+        title.style.textShadow = '0 0 10px white';
         void title.offsetWidth; // Trigger reflow
         title.style.animation = 'bounce 0.5s ease-in-out infinite';
-      }, 15000);
+      }, 13000);
     };
 
     startAnimation();
-    // Repeat the cycle every 25 seconds
-    const interval = setInterval(startAnimation, 25000);
+    // Repeat the animation cycle every 23 seconds
+    const interval = setInterval(startAnimation, 23000);
 
     return () => clearInterval(interval);
   }, []);
@@ -89,9 +89,70 @@ const Home: React.FC = () => {
         <Container maxWidth="md">
           <Grid container spacing={4} alignItems="center">
             <Grid item xs={12} md={7}>
-              <Typography variant="h2" component="h1" gutterBottom>
-                AI-Powered Resume Builder
-              </Typography>
+              <Box sx={{ textAlign: 'center' }}>
+                <Typography 
+                  ref={titleRef}
+                  variant="h2" 
+                  component="h1" 
+                  sx={{
+                    mb: 2,
+                    '@keyframes bounce': {
+                      '0%, 100%': {
+                        transform: 'translateY(0)'
+                      },
+                      '50%': {
+                        transform: 'translateY(-20px)'
+                      }
+                    },
+                    '@keyframes wave': {
+                      '0%': {
+                        color: '#00ffff',
+                        textShadow: '0 0 10px #00ffff'
+                      },
+                      '20%': {
+                        color: '#ff00ff',
+                        textShadow: '0 0 10px #ff00ff'
+                      },
+                      '40%': {
+                        color: '#ffff00',
+                        textShadow: '0 0 10px #ffff00'
+                      },
+                      '60%': {
+                        color: '#00ff00',
+                        textShadow: '0 0 10px #00ff00'
+                      },
+                      '80%': {
+                        color: '#ff1493',
+                        textShadow: '0 0 10px #ff1493'
+                      },
+                      '100%': {
+                        color: '#00ffff',
+                        textShadow: '0 0 10px #00ffff'
+                      }
+                    }
+                  }}
+                >
+                  AI-Powered Resume Builder
+                </Typography>
+                <Typography 
+                  variant="h3" 
+                  sx={{ 
+                    color: 'white',
+                    textShadow: '0 0 10px white',
+                    animation: 'pulse 2s ease-in-out infinite',
+                    '@keyframes pulse': {
+                      '0%, 100%': {
+                        opacity: 1
+                      },
+                      '50%': {
+                        opacity: 0.7
+                      }
+                    }
+                  }}
+                >
+                  Big changes Coming Soon... WOAAOW
+                </Typography>
+              </Box>
               <Typography variant="h5" paragraph>
                 Create tailored resumes and cover letters that get you hired
               </Typography>
@@ -153,49 +214,6 @@ const Home: React.FC = () => {
           </Grid>
         </Container>
       </Paper>
-
-      {/* Coming Soon Banner */}
-      <Box sx={{ 
-        py: 8, 
-        textAlign: 'center', 
-        bgcolor: 'black',
-        borderTop: '1px solid rgba(255,255,255,0.1)',
-        borderBottom: '1px solid rgba(255,255,255,0.1)'
-      }}>
-        <Typography 
-          ref={titleRef}
-          variant="h1" 
-          sx={{
-            fontSize: '4rem',
-            fontWeight: 800,
-            letterSpacing: '0.1em',
-            '@keyframes bounce': {
-              '0%, 100%': {
-                transform: 'translateY(0)'
-              },
-              '50%': {
-                transform: 'translateY(-20px)'
-              }
-            },
-            '@keyframes wave': {
-              '0%': {
-                color: '#00ffff',
-                textShadow: '0 0 20px #00ffff, 0 0 40px #00ffff'
-              },
-              '50%': {
-                color: '#ff00ff',
-                textShadow: '0 0 20px #ff00ff, 0 0 40px #ff00ff'
-              },
-              '100%': {
-                color: '#00ffff',
-                textShadow: '0 0 20px #00ffff, 0 0 40px #00ffff'
-              }
-            }
-          }}
-        >
-          Big changes Coming Soon... WOAAOW
-        </Typography>
-      </Box>
 
       {/* Features Section */}
       <Box sx={{ py: 6 }}>
