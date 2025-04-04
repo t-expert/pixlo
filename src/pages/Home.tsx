@@ -1,4 +1,5 @@
 import React from 'react';
+import resumePreview from '../assets/resume-preview.webp';
 import { 
   Box, 
   Typography, 
@@ -51,11 +52,44 @@ const Home: React.FC = () => {
         <Container maxWidth="md">
           <Grid container spacing={4} alignItems="center">
             <Grid item xs={12} md={7}>
-              <Typography variant="h2" component="h1" gutterBottom>
-                AI-Powered Resume Builder
+              <Typography 
+                variant="h2" 
+                component="h1" 
+                gutterBottom
+                sx={{
+                  animation: 'fadeIn 2s ease-in',
+                  '@keyframes fadeIn': {
+                    '0%': {
+                      opacity: 0,
+                      transform: 'translateY(20px)',
+                    },
+                    '100%': {
+                      opacity: 1,
+                      transform: 'translateY(0)',
+                    },
+                  },
+                }}
+              >
+                Build Your Perfect Resume
               </Typography>
-              <Typography variant="h5" paragraph>
-                Create tailored resumes and cover letters that get you hired
+              <Typography 
+                variant="h5" 
+                paragraph
+                sx={{
+                  animation: 'slideIn 2s ease-in',
+                  '@keyframes slideIn': {
+                    '0%': {
+                      opacity: 0,
+                      transform: 'translateX(-20px)',
+                    },
+                    '100%': {
+                      opacity: 1,
+                      transform: 'translateX(0)',
+                    },
+                  },
+                }}
+              >
+                Create professional resumes in minutes with our AI-powered builder
               </Typography>
               <Box sx={{ mt: 4 }}>
                 <Button 
@@ -97,26 +131,31 @@ const Home: React.FC = () => {
               </Box>
             </Grid>
             <Grid item xs={12} md={5}>
-              <Paper
-                elevation={3}
-                sx={{
+              <Box 
+                component="img"
+                src={resumePreview}
+                alt="Resume preview"
+                sx={{ 
                   width: '100%',
-                  height: 400,
+                  height: 'auto',
                   maxWidth: 400,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
+                  display: 'block',
                   margin: '0 auto',
                   borderRadius: 2,
-                  backgroundColor: 'background.paper',
-                  border: '1px solid',
-                  borderColor: 'divider'
+                  boxShadow: 3,
+                  animation: 'fadeUp 2s ease-in',
+                  '@keyframes fadeUp': {
+                    '0%': {
+                      opacity: 0,
+                      transform: 'translateY(40px)',
+                    },
+                    '100%': {
+                      opacity: 1,
+                      transform: 'translateY(0)',
+                    },
+                  },
                 }}
-              >
-                <Typography variant="h6" color="text.secondary">
-                  Resume Preview
-                </Typography>
-              </Paper>
+              />
             </Grid>
           </Grid>
         </Container>
