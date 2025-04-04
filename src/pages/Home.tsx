@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { 
   Box, 
   Typography, 
@@ -16,6 +16,44 @@ import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
 import SpeedIcon from '@mui/icons-material/Speed';
 
 const Home: React.FC = () => {
+  const titleRef = useRef<HTMLHeadingElement>(null);
+
+  useEffect(() => {
+    const title = titleRef.current;
+    if (!title) return;
+
+    const startAnimation = () => {
+      // Reset animation state
+      title.style.removeProperty('animation');
+      title.style.color = 'white';
+      title.style.textShadow = '0 0 20px white';
+      void title.offsetWidth; // Trigger reflow
+
+      // First white bounce phase (10 seconds)
+      title.style.animation = 'bounce 0.5s ease-in-out infinite';
+
+      // Rainbow wave phase (5 seconds)
+      setTimeout(() => {
+        title.style.animation = 'bounce 0.5s ease-in-out infinite, wave 5s linear forwards';
+      }, 10000);
+
+      // Second white bounce phase (10 seconds)
+      setTimeout(() => {
+        title.style.removeProperty('animation');
+        title.style.color = 'white';
+        title.style.textShadow = '0 0 20px white';
+        void title.offsetWidth; // Trigger reflow
+        title.style.animation = 'bounce 0.5s ease-in-out infinite';
+      }, 15000);
+    };
+
+    startAnimation();
+    // Repeat the cycle every 25 seconds
+    const interval = setInterval(startAnimation, 25000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   const features = [
     {
       icon: <AutoFixHighIcon fontSize="large" color="primary" />,
@@ -51,44 +89,11 @@ const Home: React.FC = () => {
         <Container maxWidth="md">
           <Grid container spacing={4} alignItems="center">
             <Grid item xs={12} md={7}>
-              <Typography 
-                variant="h2" 
-                component="h1" 
-                gutterBottom
-                sx={{
-                  animation: 'fadeIn 2s ease-in',
-                  '@keyframes fadeIn': {
-                    '0%': {
-                      opacity: 0,
-                      transform: 'translateY(20px)',
-                    },
-                    '100%': {
-                      opacity: 1,
-                      transform: 'translateY(0)',
-                    },
-                  },
-                }}
-              >
-                Build Your Perfect Resume
+              <Typography variant="h2" component="h1" gutterBottom>
+                AI-Powered Resume Builder
               </Typography>
-              <Typography 
-                variant="h5" 
-                paragraph
-                sx={{
-                  animation: 'slideIn 2s ease-in',
-                  '@keyframes slideIn': {
-                    '0%': {
-                      opacity: 0,
-                      transform: 'translateX(-20px)',
-                    },
-                    '100%': {
-                      opacity: 1,
-                      transform: 'translateX(0)',
-                    },
-                  },
-                }}
-              >
-                Create professional resumes in minutes with our AI-powered builder
+              <Typography variant="h5" paragraph>
+                Create tailored resumes and cover letters that get you hired
               </Typography>
               <Box sx={{ mt: 4 }}>
                 <Button 
@@ -130,41 +135,59 @@ const Home: React.FC = () => {
               </Box>
             </Grid>
             <Grid item xs={12} md={5}>
-              <Paper
-                elevation={3}
+              <Box
+                component="img"
+                src="/resume-preview.webp"
+                alt="Resume preview"
                 sx={{
                   width: '100%',
-                  height: 400,
+                  height: 'auto',
                   maxWidth: 400,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
+                  display: 'block',
                   margin: '0 auto',
                   borderRadius: 2,
-                  backgroundColor: 'background.paper',
-                  border: '1px solid',
-                  borderColor: 'divider',
-                  animation: 'fadeUp 2s ease-in',
-                  '@keyframes fadeUp': {
-                    '0%': {
-                      opacity: 0,
-                      transform: 'translateY(40px)',
-                    },
-                    '100%': {
-                      opacity: 1,
-                      transform: 'translateY(0)',
-                    },
-                  },
+                  boxShadow: 3
                 }}
-              >
-                <Typography variant="h6" color="text.secondary">
-                  Resume Preview
-                </Typography>
-              </Paper>
+              />
             </Grid>
           </Grid>
         </Container>
       </Paper>
+
+      {/* Coming Soon Banner */}
+      <Box sx={{ 
+        py: 8, 
+        textAlign: 'center', 
+        bgcolor: 'black',
+        borderTop: '1px solid rgba(255,255,255,0.1)',
+        borderBottom: '1px solid rgba(255,255,255,0.1)'
+      }}>
+        <Typography 
+          ref={titleRef}
+          variant="h1" 
+          sx={{
+            fontSize: '4rem',
+            fontWeight: 800,
+            },
+            '@keyframes wave': {
+              '0%': {
+                color: '#00ffff',
+                textShadow: '0 0 15px #00ffff'
+              },
+              '50%': {
+                color: '#ff00ff',
+                textShadow: '0 0 15px #ff00ff'
+              },
+              '100%': {
+                color: '#00ffff',
+                textShadow: '0 0 15px #00ffff'
+              }
+            }
+          }}
+        >
+          Big changes Coming Soon... WOAAOW
+        </Typography>
+      </Box>
 
       {/* Features Section */}
       <Box sx={{ py: 6 }}>
