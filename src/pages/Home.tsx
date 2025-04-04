@@ -5,8 +5,7 @@ import {
   Button, 
   Grid, 
   Card, 
-  CardContent, 
-  CardMedia,
+  CardContent,
   Container,
   Paper
 } from '@mui/material';
@@ -81,7 +80,7 @@ const Home: React.FC = () => {
                   variant="outlined"
                   size="large"
                   component={RouterLink}
-                  to="/cover-letter"
+                  to="/resume-builder"
                   sx={{ 
                     mb: 2,
                     borderColor: 'white',
@@ -98,24 +97,26 @@ const Home: React.FC = () => {
               </Box>
             </Grid>
             <Grid item xs={12} md={5}>
-              <Box 
-                component="img"
-                src="/resume-preview.png"
-                alt="Resume preview"
-                sx={{ 
+              <Paper
+                elevation={3}
+                sx={{
                   width: '100%',
-                  height: 'auto',
+                  height: 400,
                   maxWidth: 400,
-                  display: 'block',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
                   margin: '0 auto',
                   borderRadius: 2,
-                  boxShadow: 3,
-                  // Placeholder styling when image is missing
                   backgroundColor: 'background.paper',
                   border: '1px solid',
                   borderColor: 'divider'
                 }}
-              />
+              >
+                <Typography variant="h6" color="text.secondary">
+                  Resume Preview
+                </Typography>
+              </Paper>
             </Grid>
           </Grid>
         </Container>
@@ -167,16 +168,20 @@ const Home: React.FC = () => {
             {[1, 2, 3].map((item) => (
               <Grid item xs={12} sm={6} md={4} key={item}>
                 <Card sx={{ maxWidth: 345, mx: 'auto' }} elevation={3}>
-                  <CardMedia
-                    component="img"
-                    height="200"
-                    image={`/template-${item}.jpg`}
-                    alt={`Resume template ${item}`}
+                  <Box
                     sx={{
-                      // Placeholder styling when image is missing
+                      height: 200,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
                       bgcolor: `primary.${item === 1 ? 'main' : item === 2 ? 'light' : 'dark'}`,
+                      color: 'white'
                     }}
-                  />
+                  >
+                    <Typography variant="h6">
+                      Template {item}
+                    </Typography>
+                  </Box>
                   <CardContent>
                     <Typography gutterBottom variant="h6" component="div">
                       {item === 1 ? 'Professional' : item === 2 ? 'Creative' : 'Modern'} Template
@@ -199,7 +204,7 @@ const Home: React.FC = () => {
               variant="contained" 
               size="large"
               component={RouterLink}
-              to="/templates"
+              to="/resume-builder"
             >
               Browse All Templates
             </Button>
