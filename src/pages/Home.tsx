@@ -164,8 +164,24 @@ const Home: React.FC = () => {
               // Animation based on phase
               ...(animationPhase === 'waveActive' && {
                 animation: 'waveGradient 12s linear forwards',
-                backgroundImage: 'linear-gradient(to right, rgba(255,255,255,0.9) 0%, #87CEEB 20%, #DDA0DD 40%, #F0E68C 60%, #FFB6C1 80%, rgba(255,255,255,0.9) 100%)',
-                backgroundSize: '400% auto',
+                backgroundImage: `linear-gradient(
+                  to right,
+                  rgba(255,255,255,0.9) 0%,
+                  rgba(255,255,255,0.9) 10%,
+                  #7DF9FF 20%,
+                  rgba(255,255,255,0.8) 25%,
+                  #FF69B4 35%,
+                  rgba(255,255,255,0.8) 40%,
+                  #FFD700 50%,
+                  rgba(255,255,255,0.8) 55%,
+                  #FF6347 65%,
+                  rgba(255,255,255,0.8) 70%,
+                  #9370DB 80%,
+                  rgba(255,255,255,0.8) 85%,
+                  #98FB98 90%,
+                  rgba(255,255,255,0.9) 100%
+                )`,
+                backgroundSize: '500% auto', // Wider for smoother movement
                 color: 'transparent',
                 backgroundClip: 'text',
                 WebkitBackgroundClip: 'text',
@@ -187,10 +203,10 @@ const Home: React.FC = () => {
               // Wave animation with smoother transitions
               '@keyframes waveGradient': {
                 '0%': { 
-                  backgroundPosition: '0% center',
+                  backgroundPosition: '0% center'
                 },
                 '100%': { 
-                  backgroundPosition: '-300% center',
+                  backgroundPosition: '-400% center'
                 }
               },
             }}
